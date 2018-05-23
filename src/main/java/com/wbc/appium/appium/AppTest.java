@@ -13,9 +13,9 @@ public class AppTest {
 	private static DesiredCapabilities caps = new DesiredCapabilities(); // 初始化
 
 	public static AndroidDriver<AndroidElement> getDriver() throws Exception {
-		caps.setCapability("platformName", "Android");
-		caps.setCapability("platformVersion", "7.1.1");
-		caps.setCapability("udid", driverID());
+		caps.setCapability("platformName", "Android"); // 设置安卓模式
+		caps.setCapability("platformVersion", "7.1.1"); // 设置版本号
+		caps.setCapability("udid", driverID()); // 设置 driverID
 		caps.setCapability(MobileCapabilityType.DEVICE_NAME, "Meitu T8s"); // 设置机器设备信息
 		caps.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.benqu.wuta");
 		caps.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "com.benqu.wuta.activities.splash.SplashActivity");
