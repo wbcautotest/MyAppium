@@ -10,7 +10,7 @@ public class HomeEle extends BaseElement {
 		super("首页");
 	}
 	
-	public AndroidElement homeTakePhotoBtn() {
+	public AndroidElement homeTakePhotoBtn() throws Exception {
 		return BaseElement.findElementByID(homeTakePhotoBtn_ID, "首页拍照按钮");
 	}
 

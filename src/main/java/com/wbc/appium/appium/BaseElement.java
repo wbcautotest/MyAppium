@@ -1,5 +1,6 @@
 package com.wbc.appium.appium;
 
+import java.util.NoSuchElementException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import io.appium.java_client.android.AndroidElement;
@@ -11,7 +12,7 @@ public class BaseElement extends AppTest {
 	public BaseElement(String page) throws Exception {
 		this.page = page;
 	}
-	
+   
 	/**
 	 * @描述：使用ID找到一个元素
 	 * @作者：wbc
@@ -22,11 +23,18 @@ public class BaseElement extends AppTest {
 	 */
 	public static  AndroidElement findElementByID(String id, String btnName) {
 		logger.debug("找到"+btnName);
-		return driver.findElement(By.id(id));
+		try {
+			return driver.findElement(By.id(id));
+		} catch (NoSuchElementException e) {
+			MyDriver.delay(5);
+			return driver.findElement(By.id(id));
+		}
+		
 	}
 	
 	public String getBtnName() {
 		return btnName;
 	}
+
 }
 
