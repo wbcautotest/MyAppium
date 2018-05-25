@@ -1,4 +1,4 @@
-package com.wbc.appium.appium;
+package appium;
 
 import java.net.URL;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -10,8 +10,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
 
 public class AppTest {
 	public static AndroidDriver<AndroidElement> driver = null;
-	private static DesiredCapabilities caps = new DesiredCapabilities(); // 初始化
-
+	public static DesiredCapabilities caps = new DesiredCapabilities(); 
 	public static AndroidDriver<AndroidElement> getDriver() throws Exception {
 		caps.setCapability("platformName", "Android"); // 设置安卓模式。
 		caps.setCapability("platformVersion", "7.1.1"); // 设置版本号。
@@ -34,6 +33,10 @@ public class AppTest {
 
 	public static String apkPath() {
 		return "C:\\Users\\wbc\\Desktop\\新建文件夹 (2)\\无他相机.apk";
+	}
+	
+	public String caseName() {
+		return "";
 	}
 
 }

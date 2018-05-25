@@ -1,19 +1,26 @@
-package com.wbc.appium.appium;
-
-import static org.junit.Assert.fail;
-
-import java.util.NoSuchElementException;
+package base;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriverException;
-
+import appium.*;
 import io.appium.java_client.android.AndroidElement;
 import tools.HandleBridge;
 
-public class MyDriver extends AppTest {
-	AndroidElement element;
+public class BaseDriver extends AppTest {
+	private BaseElement baseElement;
 	public Logger logger = Logger.getRootLogger();
 
+	public BaseDriver() {
+		if (baseElement == null) {
+			baseElement = new BaseElement("");
+		}
+	}
+
+	/**
+	 * @描述：等待time秒（注意，不能超过60，否则超过appium的超时时间
+	 * @作者：wbc
+	 * @param time
+	 */
 	public static void delay(int time) {
 		try {
 			Thread.sleep(time * 1000);
@@ -43,18 +50,19 @@ public class MyDriver extends AppTest {
 	/**
 	 * @描述：点击一个元素
 	 * @作者：wbc
-	 * @param element
+	 * @param list
 	 * @throws Exception
 	 */
 	public void tapBean(AndroidElement element) throws Exception {
 		element.click();
-		logger.debug("点击" + element.toString());
+		logger.debug("点击" + baseElement.getPageDec() + baseElement.getBtnName());
+		BaseDriver.delay(1);
 	}
 
 	/**
 	 * @描述：使用id判断元素是否存在
 	 * @作者：wbc
-	 * @param id 
+	 * @param id
 	 * @param isShow
 	 * 
 	 * @return
@@ -64,10 +72,8 @@ public class MyDriver extends AppTest {
 		try {
 			ae = driver.findElementById(id);
 			if (ae.isDisplayed()) {
-				System.out.println(ae.isDisplayed() + "isIdElementExist");
 				return true;
 			} else {
-				System.out.println(ae.isDisplayed() + "isIdElementExist");
 				return false;
 			}
 		} catch (WebDriverException e) {
@@ -75,9 +81,16 @@ public class MyDriver extends AppTest {
 		}
 	}
 
+	/**
+	 * @描述：点击A判断B是否存在
+	 * @作者：wbc
+	 * @param elementA
+	 * @param id
+	 * @throws Exception
+	 */
 	public void tapAToConfirmIdVisible(AndroidElement elementA, String id) throws Exception {
 		tapAToConfirmIdVisible(elementA, id, 5, () -> {
-			return false;
+			return true;
 		});
 	}
 
@@ -91,7 +104,6 @@ public class MyDriver extends AppTest {
 	private void tapAToConfirmIdVisible(AndroidElement elementA, String id, int time, HandleBridge handle)
 			throws Exception {
 		boolean isExit = false;
-		boolean isSucces = true;
 		for (int i = 0; i < 5; i++) {
 			if (i == 0) {
 				tapBean(elementA);
@@ -99,27 +111,20 @@ public class MyDriver extends AppTest {
 				tryTapBean(elementA);
 			}
 			if (handle.handleSomething() == false) {
-				isSucces = false;
+				break;
 			}
 			for (int j = 0; j < time; j++) {
 				if (isIdElementExist(id) == true) {
-					System.out.println(id + "tapAToConfirmIdVisible");
+					logger.debug("判断的元素  ：" + baseElement.getBtnName() + " 存在");
 					isExit = true;
 					break;
 				}
 				System.out.println("等待中....");
 				delay(1);
 			}
-			System.out.println(isExit);
 			if (isExit) {
 				break;
 			}
-			if (isExit == false) {
-				throw new NoSuchElementException("未匹配到 ： " + id);
-			}
-		}
-		if (isSucces == false) {
-			throw new NullPointerException();
 		}
 	}
 }

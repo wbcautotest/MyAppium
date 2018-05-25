@@ -1,6 +1,7 @@
 package page;
 
-import com.wbc.appium.appium.BasePage;
+
+import base.BasePage;
 import element.HomeEle;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -9,12 +10,11 @@ import io.appium.java_client.android.AndroidElement;
 public class HomePage extends BasePage {
 	private HomeEle ele;
 	public HomePage(AndroidDriver<AndroidElement> driver) throws Exception {
-		super(driver, "首页");
+		super(driver);
 		this.ele = new HomeEle();
 	}
 	
 	public void tapTakePhoto() throws Exception {
-//		myDriver.tapBean(ele.homeTakePhotoBtn());
 		myDriver.tapAToConfirmIdVisible(ele.homeTakePhotoBtn(), ele.goLand_ID);
 	}
 	
